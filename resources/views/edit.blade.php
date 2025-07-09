@@ -14,28 +14,35 @@
         </ul>
     @endif
 
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
+    <form action="{{ route('users.update', $submission->id) }}" method="POST">
         @csrf
         @method('PUT')
 
         <label>名前:</label>
-        <input type="text" name="username" value="{{ old('username', $user->name) }}"><br><br>
+        <input type="text" name="name" value="{{ old('name', $submission->name) }}"><br><br>
 
         <label>年齢:</label>
         <select name="age">
             @for ($i = 18; $i <= 100; $i++)
-                <option value="{{ $i }}" {{ old('age', $user->age) == $i ? 'selected' : '' }}>{{ $i }}</option>
+                <option value="{{ $i }}" {{ old('age', $submission->age) == $i ? 'selected' : '' }}>{{ $i }}</option>
             @endfor
         </select><br><br>
 
         <label>メールアドレス:</label>
-        <input type="email" name="email" value="{{ old('email', $user->email) }}"><br><br>
+        <input type="email" name="email" value="{{ old('email', $submission->email) }}"><br><br>
 
         <label>パスワード（変更する場合のみ入力）:</label>
         <input type="password" name="password"><br><br>
         
-        
-        <input type="submit" value="更新">
+        <button type="submit">更新</button>
+      
     </form>
+    <form action="(route('users.delete', $submission->id))" method="POST" style="display:inline;">    
+        @csrf
+        @method('DELETE')
+        <button type="submit" formaction ="{{ route('users.delete', $submission->id) }}" onclick ="return confirm('本当に削除しますか？')">削除</button>
+        <a href="{{ route('users.index') }}">戻る</a>
+    </form>
+
 </body>
 </html>
